@@ -25,13 +25,12 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
   <div id="login">
 
   <ul class="list-group">
-    <li class="list-group-item"><a href="index.php"> 서비스소개</a></li>
+    <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
     <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-    <li class="list-group-item"><a href="map.php">메뉴1</a></li>
-    <li class="list-group-item"><a href="map.php"> 메뉴2</a></li>
-    <li class="list-group-item"><a href="map.php"> 메뉴3</a></li>
-    <li class="list-group-item"><a href='report.php'>메뉴5</a></li>
-
+    <li class="list-group-item"><a href="menu.php">메뉴1</a></li>
+    <li class="list-group-item"><a href="menu.php">메뉴2</a></li>
+    <li class="list-group-item"><a href="menu.php">메뉴3</a></li>
+    <li class="list-group-item"><a href='menu.php'>메뉴4</a></li>
   </ul>
   <div>
     <?php
