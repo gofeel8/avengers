@@ -1,9 +1,8 @@
 <?php
 session_start();
-
 require_once("./db_info.php");
   $bNo = $_GET['bno'];
-	if(!empty($bNo) && empty($_COOKIE['board_free_' . $bNo])) {
+	if(!empty($bNo)) {
 		$sql = 'UPDATE avengers_board set see = see + 1 where id = ' . $bNo;
     $result=mysqli_query($conn,$sql);
 		if(empty($result)) {
@@ -13,8 +12,6 @@ require_once("./db_info.php");
 				history.back();
 			</script>
 			<?php
-		} else {
-			setcookie('board_free_' . $bNo, TRUE, time() + (60 * 60 * 24), '/');
 		}
 	}
   $sql ='SELECT title, comment, writedate, see, user from avengers_board where id = ' . $bNo;
