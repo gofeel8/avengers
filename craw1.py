@@ -19,13 +19,13 @@ cnt=1
 #homepage = driver.find_element_by_css_selector('div.tit-area > h6')
 
 
-while(pagenum<20):
+while(pagenum<2):
     driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
     time.sleep(2)
-    print("---------------"+str(n)+" page --------------")
 
     while(infonum<16):
         try:
+            print("----- "+str(pagenum)+" page, "+str(infonum-1)+" information -----")
             time.sleep(1)
 
             driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum)+']/div[1]/a').click()
@@ -35,7 +35,6 @@ while(pagenum<20):
             """
             txtfile_info=open("C:/Users/user/Desktop/aven_info.txt", "a", encoding='UTF16')
             txtfile_detail=open("C:/Users/user/Desktop/aven_detail.txt", "a", encoding='UTF16')
-
 
             for q1 in info:
                 infotext = q1.text
@@ -47,9 +46,11 @@ while(pagenum<20):
             txtfile_detail.write(str(detailtext))
             txtfile_detail.write(",")
             """
+            print("                      -------------   list   ------------- \n")
             print(info.text)
-            print("                      -------------detail information----------- \n")
+            print("                      -------------  article ------------- \n")
             print(detail.text)
+
             cnt = cnt+1
             infonum=infonum+1
 
@@ -61,4 +62,4 @@ while(pagenum<20):
     infonum=2  #to reset num because we go next page
     pagenum=pagenum+1
 
-print("total crawling num : "+cnt)
+print("total crawling num : "+str(cnt))
