@@ -9,35 +9,56 @@ from selenium.common.exceptions import StaleElementReferenceException
 DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
 driver = webdriver.Chrome(DRIVER_DIR)
 driver.implicitly_wait(1)
-n=1
-a=2
-c=2
+
+pagenum=1 #pagenumber
+infonum=2 #cuz number start 2 not 1
+cnt=1
 #field = driver.find_element_by_css_selector('div.tit-area > h6')
 #who = driver.find_element_by_css_selector('div.tit-area > h6')
 #organization =driver.find_element_by_css_selector('div.tit-area > h6')
 #homepage = driver.find_element_by_css_selector('div.tit-area > h6')
 
 
-while(n<20):
-    driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(n)+' ')
+while(pagenum<20):
+    driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
     time.sleep(2)
-    print("---------------"+str(n)+"번째 페이지--------------")
-    #hashtag = driver.find_elements_by_css_selector('div.tit-area > h6')
-    while(a<16):
+    print("---------------"+str(n)+" page --------------")
+
+    while(infonum<16):
         try:
-            driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(a)+']/div[1]/a').click()
-            test1 = driver.find_element_by_class_name("cd-info-list")
             time.sleep(1)
-            print(test1.text)
-            print("---------------------------- \n")
-            a=a+1
+
+            driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum)+']/div[1]/a').click()
+
+            info = driver.find_element_by_class_name("cd-info-list")
+            detail = driver.find_element_by_class_name("comm-desc")
+            """
+            txtfile_info=open("C:/Users/user/Desktop/aven_info.txt", "a", encoding='UTF16')
+            txtfile_detail=open("C:/Users/user/Desktop/aven_detail.txt", "a", encoding='UTF16')
+
+
+            for q1 in info:
+                infotext = q1.text
+            txtfile_info.write(str(infotext))
+            txtfile_info.write(",")
+
+            for q2 in detail:
+                detailtext = q2.text
+            txtfile_detail.write(str(detailtext))
+            txtfile_detail.write(",")
+            """
+            print(info.text)
+            print("                      -------------detail information----------- \n")
+            print(detail.text)
+            cnt = cnt+1
+            infonum=infonum+1
+
             driver.back()
 
         except NoSuchElementException:
             print("----------NoSuchElementException----------")
-            a=a+1
-    a=c
-    n=n+1
-        #hashtag = driver.find_elements_by_css_selector('div.tit-area > h6')
-        #for q in hashtag:
-        #    print(q._get_attribute('content'))
+            infonum=infonum+1
+    infonum=2  #to reset num because we go next page
+    pagenum=pagenum+1
+
+print("total crawling num : "+cnt)
