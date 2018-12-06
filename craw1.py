@@ -4,18 +4,14 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
+#someone use this project you shoud change DRIVER_DIR  cuz your chromedriver.exe is not same point
 DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
 driver = webdriver.Chrome(DRIVER_DIR)
 driver.implicitly_wait(1)
 
 pagenum=1 #pagenumber
 infonum=2 #cuz number start 2 not 1
-cnt=1
-#field = driver.find_element_by_css_selector('div.tit-area > h6')
-#who = driver.find_element_by_css_selector('div.tit-area > h6')
-#organization =driver.find_element_by_css_selector('div.tit-area > h6')
-#homepage = driver.find_element_by_css_selector('div.tit-area > h6')
-
+cnt=1 #crawling number
 
 while(pagenum<2):
     driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
