@@ -1,6 +1,4 @@
 #!/usr/bin/python3
-import time
-import csv
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
