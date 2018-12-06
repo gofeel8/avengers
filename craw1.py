@@ -1,9 +1,11 @@
 #!/usr/bin/python3
+#wevity contest
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
+
 #someone use this project you shoud change DRIVER_DIR  cuz your chromedriver.exe is not same point
 DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
 driver = webdriver.Chrome(DRIVER_DIR)
@@ -17,7 +19,7 @@ while(pagenum<2):
     driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
     time.sleep(2)
 
-    while(infonum<16):
+    while(infonum<=16):
         try:
             print("----- "+str(pagenum)+" page, "+str(infonum-1)+" information -----")
             time.sleep(1)
@@ -56,4 +58,6 @@ while(pagenum<2):
     infonum=2  #to reset num because we go next page
     pagenum=pagenum+1
 
-print("total crawling num : "+str(cnt))
+print("total crawling num : "+str(cnt-1))
+
+#여기서 접수기간 2018-12-05 ~ 2018-12-30 D-24 에서 정규표현식 써서 D뒤에 -이면 ㅇㅋ 아니면 무시
