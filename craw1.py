@@ -1,7 +1,9 @@
 #!/usr/bin/python3
+#wevity contest
 #!/usr/bin/python3
 #wevity contest
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 import time
 import requests
 import re
@@ -10,27 +12,28 @@ import re
 DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
 driver = webdriver.Chrome(DRIVER_DIR)
 driver.implicitly_wait(1)
-
-pagenum=1 #pagenumber
+endcheck = True
+pagenum=18 #pagenumber
 infonum=2 #cuz number start 2 not 1
 cnt=1 #crawling number
 
-while(pagenum<=16):
+#다음에 pagenum <=100 말고 무한루프로 만들기
+while(pagenum<=100):
     driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
     time.sleep(2)
 
     while(infonum<=16):
         try:
             time.sleep(1)
+            #driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum)+']/div[1]/a').click()
             driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum)+']/div[1]/a').click()
-
             URL=(driver.current_url)
             res=requests.get(URL)
             html=res.text
-
+            
             time.sleep(1)
-
-
+                    
+            
             #time.sleep(1)
             print("----- "+str(pagenum)+" page, "+str(infonum-1)+" information -----")
             # (공모전이름)
@@ -80,12 +83,36 @@ while(pagenum<=16):
             infonum=infonum+1
 
             driver.back()
-
-        except NoSuchElementException:
-            print("----------NoSuchElementException----------")
-            #infonum=infonum+1
+            
+        except NoSuchElementException:# if pagenum == None 
+            endcheck = False
+            break
     infonum=2  #to reset num because we go next page
     pagenum=pagenum+1
+    
+    if endcheck == False:
+        print("receipt crawling is finish ")
+        break
+#-------------------------------------------------------------------------------------
+#------------------to be receipt crawling ----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 print("total crawling num : "+str(cnt-1))
 
