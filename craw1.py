@@ -7,8 +7,7 @@ import requests
 import re
 
 #someone use this project you shoud change DRIVER_DIR  cuz your chromedriver.exe is not same point
-DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
-driver = webdriver.Chrome(DRIVER_DIR)
+driver = webdriver.Chrome()
 driver.implicitly_wait(1)
 
 pagenum=1 #pagenumber
