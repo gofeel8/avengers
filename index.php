@@ -5,7 +5,7 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<title>어벤져스</title>
+<title>어벤져수</title>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
