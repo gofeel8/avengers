@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 #wevity contest
-#!/usr/bin/python3
-#wevity contest
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 import time
