@@ -3,7 +3,7 @@ session_start();
 require_once("./db_info.php");
   $bNo = $_GET['bno'];
 	if(!empty($bNo)) {
-		$sql = 'UPDATE avengers_board set see = see + 1 where id = ' . $bNo;
+		$sql = 'UPDATE avengers_crawling set see = see + 1 where id = ' . $bNo;
     $result=mysqli_query($conn,$sql);
 		if(empty($result)) {
 			?>
@@ -14,7 +14,7 @@ require_once("./db_info.php");
 			<?php
 		}
 	}
-  $sql ='SELECT title, comment, writedate, see, user from avengers_board where id = ' . $bNo;
+  $sql ='SELECT title,com,day,info,img,page,see from avengers_crawling where id = ' . $bNo;
   $result=mysqli_query($conn,$sql);
   $row=mysqli_fetch_array($result);
 ?>
@@ -24,7 +24,7 @@ require_once("./db_info.php");
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>공지사항</title>
+<title>공모전</title>
 <link rel="stylesheet" href="./css/style.css">
 <link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
 <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -80,10 +80,14 @@ require_once("./db_info.php");
 <h3>공지사항</h3>
 <div id="boardView">
 <h3 id="boardTitle"><?php echo $row['title']?></h3>
+<div id="boardID">작성자: <?php echo '관리자'?></div>
+<div id="boardHit">조회수: <?php echo $row['see']?></div>
+<img src="<?php echo $row['img']; ?>" width='500px' alt="">
+<div id="boardCom">주관: <?php echo $row['com']?></div>
+<a href="<?php echo $row['page']?>">지원하러가기</a>
+<br><br>
 <div id="boardInfo">
-<span id="boardID">작성자: <?php echo $row['user']?></span>
-<span id="boardDate">작성일: <?php echo $row['writedate']?></span>
-<span id="boardHit">조회: <?php echo $row['see']?></span>
+<?php echo $row['info'] ?>
 </div>
 <div id="boardContent"><?php echo $row['comment']?></div>
 <?php

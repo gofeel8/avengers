@@ -26,7 +26,7 @@ $searchColumn ='';
 			$searchSql = '';
 		}
 		/* 검색 끝 */
-		$sql = "SELECT count(*) as cnt from avengers_board".$searchSql;
+		$sql = "SELECT count(*) as cnt from avengers_crawling".$searchSql;
 		$result=mysqli_query($conn,$sql);
 		// $row = mysqli_query($con, $sql)
 
@@ -69,19 +69,19 @@ $searchColumn ='';
   	// }
   	//첫 섹션이 아니라면 이전 버튼을 생성
   	if($currentSection != 1) {
-			$paging .= '<li ><a href="./board.php?page=' . $prevPage . $subString . '">이전</a></li>';
+			$paging .= '<li ><a href="./crawling.php?page=' . $prevPage . $subString . '">이전</a></li>';
   	}
   	for($i = $firstPage; $i <= $lastPage; $i++) {
   		if($i == $page) {
-  			$paging .= '<li ><a href="./board.php?page=' . $i . $subString . '">' . $i . '</a></li>';
+  			$paging .= '<li ><a href="./crawling.php?page=' . $i . $subString . '">' . $i . '</a></li>';
   		}
 			else {
-  					$paging .= '<li><a href="./board.php?page=' . $i . $subString . '">' . $i . '</a></li>';
+  					$paging .= '<li><a href="./crawling.php?page=' . $i . $subString . '">' . $i . '</a></li>';
   		}
   	}
   	//마지막 섹션이 아니라면 다음 버튼을 생성
   	if($currentSection != $allSection) {
-  		$paging .= '<li><a href="./board.php?page=' . $nextPage . $subString . '">다음</a></li>';
+  		$paging .= '<li><a href="./crawling.php?page=' . $nextPage . $subString . '">다음</a></li>';
   	}
   	//마지막 페이지가 아니라면 끝 버튼을 생성
   	// if($page != $allPage) {
@@ -92,7 +92,7 @@ $searchColumn ='';
   	$currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
   	$sqlLimit = ' limit ' . $currentLimit . ', ' . $onePage; //limit sql 구문
   	// $sql = 'select * from board order by id desc' . $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
-		$sql = 'SELECT * from avengers_board'.$searchSql.' order by id desc'.$sqlLimit;
+		$sql = 'SELECT * from avengers_crawling'.$searchSql.' order by id'.$sqlLimit;
 	  $result=mysqli_query($conn,$sql);
 }
 ?>
@@ -105,7 +105,7 @@ $searchColumn ='';
   <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>공지사항</title>
+  <title>어벤져스</title>
 <link rel="stylesheet" href="./css/style.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -158,14 +158,14 @@ $searchColumn ='';
     <div class="container">
 
 <table class="table table-hover">
-	<caption class="readHide">공지사항</caption>
+	<caption class="readHide">공모전</caption>
 
   <thead>
     <tr>
 
-      <th width="50%">제목</th>
-      <th>작성자</th>
-      <th>날짜</th>
+      <th width="40%">이름</th>
+      <th>주최</th>
+      <th>기간</th>
       <th>조회수</th>
     </tr>
   </thead>
@@ -178,9 +178,9 @@ $searchColumn ='';
 	      							while($row=mysqli_fetch_array($result))
 	      							{
 
-	      								$datetime = explode(' ', $row['writedate']);
+	      								// $datetime = explode(' ', $row['writedate']);
 
-	      								$date = $datetime[0];
+	      								// $date = $datetime[0];
 
 	      								// $time = $datetime[1];
 
@@ -190,19 +190,19 @@ $searchColumn ='';
 
 	      								// else
 
-	      									$row['writedate'] = $date;
+	      									// $row['writedate'] = $date;
 
 	      						?>
 					<tr>
 
 
-						<td class="title"><a href="./view.php?bno=<?php echo $row['id']?>"><?php echo $row['title']?></a></td>
+						<td class="title"><a href="./crawlingview.php?bno=<?php echo $row['id']?>"><?php echo $row['title']?></a></td>
 
-						<td class="author"><?php echo $row['user']?></td>
+						<td class="com"><?php echo $row['com']?></td>
 
-						<td class="date"><?php echo $row['writedate']?></td>
+						<td class="when"><?php echo $row['day']?></td>
 
-						<td class="hit"><?php echo $row['see']?></td>
+						<td class="hit"><?php echo $row['see'] ?></td>
 
 					</tr>
 
@@ -245,9 +245,7 @@ if(isset($_SESSION['username']) && $_SESSION['username']=="관리자"){
 
 			<option <?php echo $searchColumn=='title'?'selected="selected"':null?> value="title">제목</option>
 
-			<option <?php echo $searchColumn=='comment'?'selected="selected"':null?> value="comment">내용</option>
-
-			<option <?php echo $searchColumn=='user'?'selected="selected"':null?> value="user">작성자</option>
+			<option <?php echo $searchColumn=='info'?'selected="selected"':null?> value="comment">상세내용</option>
 
 		</select>
 

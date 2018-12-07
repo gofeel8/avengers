@@ -5,7 +5,7 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
 <!doctype html>
 <html lang="en" dir="ltr">
 <head>
-<title>어벤져수</title>
+<title>어벤져스</title>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,10 +27,7 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
   <ul class="list-group">
     <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
     <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-    <li class="list-group-item"><a href="menu.php">메뉴1</a></li>
-    <li class="list-group-item"><a href="menu.php">메뉴2</a></li>
-    <li class="list-group-item"><a href="menu.php">메뉴3</a></li>
-    <li class="list-group-item"><a href='menu.php'>메뉴4</a></li>
+    <li class="list-group-item"><a href="crawling.php">공모전</a></li>
   </ul>
   <div>
     <?php
