@@ -106,3 +106,103 @@ table a, #comments a{background-color:inherit;}
 .searchBox{
     color:black;
 }
+
+/*
+.contest-overview {
+	width: 100%;
+	height: auto;
+	min-height: 650px;
+	overflow: hidden;
+	padding-left: 30px;
+	position: relative;
+}
+
+.contest-overview > .poster-holder {
+	width: 420px;
+	height: 520px;
+	overflow: hidden;
+	border: 1px solid #ddd;
+	position: absolute;
+	top: 7px;
+	left: 10;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-position: center;
+} */
+
+.poster-holder{
+
+}
+
+.poster-holder >a> img {
+	width: 600px;
+  height: auto;
+  display:inline-block;
+	position: relative;
+  float: left;
+}
+
+.poster-holder > table{
+  margin-top: 100px;
+  position: relative;
+  display:inline-block;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  table-layout: fixed;
+}
+
+
+table.type-5 {
+	width: 100%;
+	border-collapse: collapse;
+	padding: 0;
+	position: relative;
+	cursor: default;
+	text-align: center;
+}
+
+table.type-5 th {
+	height: auto;
+	padding: 7px;
+	padding-right: 0;
+	text-align: left;
+	font-weight: bold;
+	color: #000;
+	position: relative;
+}
+
+
+table.type-5 th:before {
+	content: '';
+	display: inline-block;
+	width: 1px;
+	height: 5px;
+	border-radius: 50%;
+	background: #333;
+	margin-right: 10px;
+}
+
+table.type-5 th:after {
+	content: '';
+	display: inline-block;
+	float: right;
+	width: 0;
+	height: 14px;
+	border-right: 1px solid #ccc;
+}
+
+table.type-5 td {
+	padding: 7px;
+	padding-left: 16px;
+	text-align: left;
+}
+
+table.type-5 tr {border-bottom: 1px dotted #bbb;}
+table.type-5 tr:last-of-type {border-bottom: none;}
+
+#boardInfo{
+  font-size: 20px;
+}

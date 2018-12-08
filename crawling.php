@@ -21,9 +21,9 @@ $searchColumn ='';
 			$subString .= '&amp;searchText=' . $searchText;
 		}
 		if(isset($searchColumn) && isset($searchText)) {
-			$searchSql = ' where ' . $searchColumn . ' like "%' . $searchText . '%"';
+			$searchSql = " WHERE STR_TO_DATE(substring(day,14),'%Y-%m-%d')>now()".' and ' . $searchColumn . ' like "%' . $searchText . '%"';
 		} else {
-			$searchSql = '';
+			$searchSql = " WHERE STR_TO_DATE(substring(day,14),'%Y-%m-%d')>now()";
 		}
 		/* 검색 끝 */
 		$sql = "SELECT count(*) as cnt from avengers_crawling".$searchSql;
@@ -92,7 +92,7 @@ $searchColumn ='';
   	$currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
   	$sqlLimit = ' limit ' . $currentLimit . ', ' . $onePage; //limit sql 구문
   	// $sql = 'select * from board order by id desc' . $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
-		$sql = 'SELECT * from avengers_crawling'.$searchSql.' order by id'.$sqlLimit;
+		$sql = 'SELECT * from avengers_crawling'.$searchSql.' order by id desc'.$sqlLimit;
 	  $result=mysqli_query($conn,$sql);
 }
 ?>
@@ -239,13 +239,13 @@ if(isset($_SESSION['username']) && $_SESSION['username']=="관리자"){
 
 <div class="searchBox" align="center">
 
-	<form action="./board.php" method="get">
+	<form action="./crawling.php" method="get">
 
 		<select name="searchColumn">
 
 			<option <?php echo $searchColumn=='title'?'selected="selected"':null?> value="title">제목</option>
 
-			<option <?php echo $searchColumn=='info'?'selected="selected"':null?> value="comment">상세내용</option>
+			<option <?php echo $searchColumn=='info'?'selected="selected"':null?> value="info">상세내용</option>
 
 		</select>
 

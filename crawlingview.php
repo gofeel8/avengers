@@ -79,12 +79,50 @@ require_once("./db_info.php");
 <article class="boardArticle">
 <h3>공지사항</h3>
 <div id="boardView">
-<h3 id="boardTitle"><?php echo $row['title']?></h3>
-<div id="boardID">작성자: <?php echo '관리자'?></div>
-<div id="boardHit">조회수: <?php echo $row['see']?></div>
-<img src="<?php echo $row['img']; ?>" width='500px' alt="">
-<div id="boardCom">주관: <?php echo $row['com']?></div>
-<a href="<?php echo $row['page']?>">지원하러가기</a>
+  <h3 id="boardTitle"><?php echo $row['title']?></h3>
+
+  <div class="poster-holder">
+<a href="<?php echo $row['img']; ?>">
+    <img src="<?php echo $row['img']; ?>" alt="공모전">
+</a>
+<table class="type-5">
+  <colgroup>
+  <col style="width:100px;">
+  <col style>
+  </colgroup>
+
+  <tbody>
+    <tr>
+      <th scope="row">
+        작성자</th>
+      <td>관리자</td>
+    </tr>
+    <tr>
+      <th scope="row">
+        조회수</th>
+      <td><?php echo $row['see']?></td>
+    </tr>
+    <tr>
+      <th scope="row">
+        주최</th>
+      <td><?php echo $row['com']?></td>
+    </tr>
+    <tr>
+      <th scope="row">
+        기간</th>
+      <td><?php echo $row['day']?></td>
+    </tr>
+    <tr>
+      <th scope="row">
+        홈페이지</th>
+      <td>
+      <a href="<?php echo $row['page']?>"><?php echo $row['page']?></a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
 <br><br>
 <div id="boardInfo">
 <?php echo $row['info'] ?>
