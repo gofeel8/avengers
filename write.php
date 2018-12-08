@@ -14,7 +14,7 @@ session_start();
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>공지사항</title>
+	<title>자유게시판</title>
   <link rel="stylesheet" href="./css/style.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -32,12 +32,8 @@ session_start();
   <div id="login">
 
 		  <ul class="list-group">
-		    <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
-		    <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-		    <li class="list-group-item"><a href="menu.php">메뉴1</a></li>
-		    <li class="list-group-item"><a href="menu.php">메뉴2</a></li>
-		    <li class="list-group-item"><a href="menu.php">메뉴3</a></li>
-		    <li class="list-group-item"><a href='menu.php'>메뉴4</a></li>
+				<li class="list-group-item"><a href="index.php"> 공모전</a></li>
+		    <li class="list-group-item"><a href="board.php"> 자유게시판</a></li>
 		  </ul>
   <div id="jb-sidebar-right">
     <?php
@@ -70,7 +66,7 @@ session_start();
   <div id="article">
 
 	<article class="boardArticle">
-		<h3>공지사항 글쓰기</h3>
+		<h3>자유게시판 글쓰기</h3>
 		<div id="boardWrite">
 			<form action="./write_update.php" method="post">
         <?php

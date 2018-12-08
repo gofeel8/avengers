@@ -1,9 +1,102 @@
 <?php
-// include"session.php";   //session.php파일을 포함
-session_start(); //세션시작에 실패하면 false 반환   에러시 무시: @sesison_start(); 또는 output_buffering=on인지 확인
+session_start();
 	require_once("./db_info.php");
+	/* 페이징 시작 */
+	$paging='';
+  	//페이지 get 변수가 있다면 받아오고, 없다면 1페이지를 보여준다.
+$subString='';
+$searchColumn ='';
+  	if(isset($_GET['page'])) {
+  		$page = $_GET['page'];
+  	} else {
+  		$page = 1;
+  	}
+		/* 검색 시작 */
+		if(isset($_GET['searchColumn'])) {
+			$searchColumn = $_GET['searchColumn'];
+			$subString .= '&amp;searchColumn=' . $searchColumn;
+		}
+		if(isset($_GET['searchText'])) {
+			$searchText = $_GET['searchText'];
+			$subString .= '&amp;searchText=' . $searchText;
+		}
+		if(isset($searchColumn) && isset($searchText)) {
+			$searchSql = " WHERE STR_TO_DATE(substring(day,14),'%Y-%m-%d')>now()".' and ' . $searchColumn . ' like "%' . $searchText . '%"';
+		} else {
+			$searchSql = " WHERE STR_TO_DATE(substring(day,14),'%Y-%m-%d')>now()";
+		}
+		/* 검색 끝 */
+		$sql = "SELECT count(*) as cnt from avengers_crawling".$searchSql;
+		$result=mysqli_query($conn,$sql);
+		// $row = mysqli_query($con, $sql)
 
+    $row=mysqli_fetch_array($result);
+  	$allPost = $row['cnt']; //전체 게시글의 수
+
+		if(empty($allPost)) {
+	$emptyData = '<tr><td class="textCenter" colspan="5">글이 존재하지 않습니다.</td></tr>';
+	// $paging = '<ul>';
+	$paging .= '<li>1</li>';
+	// $paging .= '</ul>';
+	}
+	 else {
+  	$onePage = 15; // 한 페이지에 보여줄 게시글의 수.
+  	$allPage = ceil($allPost / $onePage); //전체 페이지의 수
+  	if($page < 1 || ($allPage && $page > $allPage)) {
+  ?>
+  		<script>
+  			alert("존재하지 않는 페이지입니다.");
+  			history.back();
+  		</script>
+  <?php
+  		exit;
+  	}
+  	$oneSection = 10; //한번에 보여줄 총 페이지 개수(1 ~ 10, 11 ~ 20 ...)
+  	$currentSection = ceil($page / $oneSection); //현재 섹션
+  	$allSection = ceil($allPage / $oneSection); //전체 섹션의 수
+  	$firstPage = ($currentSection * $oneSection) - ($oneSection - 1); //현재 섹션의 처음 페이지
+  	if($currentSection == $allSection) {
+  		$lastPage = $allPage; //현재 섹션이 마지막 섹션이라면 $allPage가 마지막 페이지가 된다.
+  	} else {
+  		$lastPage = $currentSection * $oneSection; //현재 섹션의 마지막 페이지
+  	}
+  	$prevPage = (($currentSection - 1) * $oneSection); //이전 페이지, 11~20일 때 이전을 누르면 10 페이지로 이동.
+  	$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); //다음 페이지, 11~20일 때 다음을 누르면 21 페이지로 이동.
+  	// $paging = '<ul>'; // 페이징을 저장할 변수
+  	//첫 페이지가 아니라면 처음 버튼을 생성
+  	// if($page != 1) {
+						// $paging .= '<li><a href="./board.php?page=1' . $subString . '">처음</a></li>';
+  	// }
+  	//첫 섹션이 아니라면 이전 버튼을 생성
+  	if($currentSection != 1) {
+			$paging .= '<li ><a href="./crawling.php?page=' . $prevPage . $subString . '">이전</a></li>';
+  	}
+  	for($i = $firstPage; $i <= $lastPage; $i++) {
+  		if($i == $page) {
+  			$paging .= '<li ><a href="./crawling.php?page=' . $i . $subString . '">' . $i . '</a></li>';
+  		}
+			else {
+  					$paging .= '<li><a href="./crawling.php?page=' . $i . $subString . '">' . $i . '</a></li>';
+  		}
+  	}
+  	//마지막 섹션이 아니라면 다음 버튼을 생성
+  	if($currentSection != $allSection) {
+  		$paging .= '<li><a href="./crawling.php?page=' . $nextPage . $subString . '">다음</a></li>';
+  	}
+  	//마지막 페이지가 아니라면 끝 버튼을 생성
+  	// if($page != $allPage) {
+			// $paging .= '<li ><a href="./board.php?page=' . $allPage . $subString . '">끝</a></li>';
+  	// }
+  	// $paging .= '</ul>';
+    /* 페이징 끝 */
+  	$currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
+  	$sqlLimit = ' limit ' . $currentLimit . ', ' . $onePage; //limit sql 구문
+  	// $sql = 'select * from board order by id desc' . $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
+		$sql = 'SELECT * from avengers_crawling'.$searchSql.' order by id desc'.$sqlLimit;
+	  $result=mysqli_query($conn,$sql);
+}
 ?>
+
 
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -30,13 +123,8 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
   <div id="login">
 
   <ul class="list-group">
-		<li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
-    <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-    <li class="list-group-item"><a href="map.php">메뉴1</a></li>
-    <li class="list-group-item"><a href="map.php"> 메뉴2</a></li>
-    <li class="list-group-item"><a href="map.php"> 메뉴3</a></li>
-    <li class="list-group-item"><a href='menu.php'>메뉴4</a></li>
-
+		<li class="list-group-item"><a href="index.php"> 공모전</a></li>
+		<li class="list-group-item"><a href="board.php"> 자유게시판</a></li>
   </ul>
   <div>
 
@@ -44,26 +132,23 @@ session_start(); //세션시작에 실패하면 false 반환   에러시 무시:
 
     $memberId = $_POST['id'];
     $memberPw = $_POST['password'];
-    $sql = "SELECT * FROM avengers_member WHERE id = '$memberId' AND pwd = '$memberPw'"; //my sqli 연결의 끈을 생성시키고, 쿼리를 실행
-      //고른다 모든것 member테이블로부터 id와 pwd가 일치하는 것을
-    $res = $conn->query($sql); //실행결과는 $res에 저장
-    $row = $res->fetch_array(MYSQLI_ASSOC); // 넘어온 결과를 한 행씩 패치해서 $row라는 배열에 담는다.
+    $sql = "SELECT * FROM avengers_member WHERE id = '$memberId' AND pwd = '$memberPw'";
+
+    $res = $conn->query($sql);
+    $row = $res->fetch_array(MYSQLI_ASSOC);
 if(!isset($_SESSION['username']))
 {
   if ($row != null) {                                                 //만약 배열에 존재한다면
 
     $_SESSION['username'] = $row['name'];                           // 세션을 만들어준다.
     echo "<h3>".$_SESSION['username'].'님</h3><br>';
-    // echo '<a href="logout.php" >로그아웃 하기</a>';           //로그아웃 페이지 링크.
     echo '<input type="button" name ="button" value="로그아웃" class="btn btn-info" onclick="window.location.href=\'logout.php\'">';           //로그아웃 페이지 링크.
-    // <input type=\"button\" name =\"버튼\" value=\"로그아웃\" class=\"btn btn-info\" onclick=\"location.href=\'logo.php\'\";>
 
   }
 
   else if($row == null){
 
     echo "<script>alert(\"id or pw error\"); window.location.replace(\"index.php\");</script>";
-    // header('Location:index.php');
 
   }
 }
@@ -72,8 +157,6 @@ else
   echo "<h3>".$_SESSION['username'].'님</h3><br>';
   echo '<input type="button" name ="button" value="로그아웃" class="btn btn-info" onclick="window.location.href=\'logout.php\'">';           //로그아웃 페이지 링크.
 
-  // echo '<a href="logout.php" >로그아웃 하기</a>';           //로그아웃 페이지 링크.
-  // echo " <input type=\"button\" name =\"버튼\" value=\"로그아웃\" class=\"btn btn-info\" onclick=window.location.replace(\"index.php\");>";           //로그아웃 페이지 링크.
 
 }
 
@@ -82,9 +165,89 @@ else
   </div>
 </div>
 <div id="article">
-<h2>메인페이지입니다</h2>
 
-	</div>
+	<div class="container">
+
+<table class="table table-hover">
+<caption class="readHide">공모전</caption>
+
+<thead>
+	<tr>
+
+		<th width="40%">이름</th>
+		<th>주최</th>
+		<th>기간</th>
+		<th>조회수</th>
+	</tr>
+</thead>
+<tbody>
+	<?php
+				if(isset($emptyData)) {
+					echo $emptyData;
+				} else {
+
+										while($row=mysqli_fetch_array($result))
+										{
+
+									?>
+				<tr>
+
+
+					<td class="title"><a href="./crawlingview.php?bno=<?php echo $row['id']?>"><?php echo $row['title']?></a></td>
+
+					<td class="com"><?php echo $row['com']?></td>
+
+					<td class="when"><?php echo $row['day']?></td>
+
+					<td class="hit"><?php echo $row['see'] ?></td>
+
+				</tr>
+
+					<?php
+
+						}
+					}
+					?>
+</tbody>
+</table>
+<?php
+if(isset($_SESSION['username']) && $_SESSION['username']=="관리자"){
+?>
+<a href="./write.php" class="btn btn-default pull-right">글쓰기</a>
+<?php
+}
+?>
+<div class="text-center">
+<ul class="pagination">
+
+	<?php echo $paging ?>
+
+</ul>
+
+</div>
+
+</div>
+
+<div class="searchBox" align="center">
+
+<form action="./crawling.php" method="get">
+
+	<select name="searchColumn">
+
+		<option <?php echo $searchColumn=='title'?'selected="selected"':null?> value="title">제목</option>
+
+		<option <?php echo $searchColumn=='info'?'selected="selected"':null?> value="info">상세내용</option>
+
+	</select>
+
+	<input type="text" name="searchText" value="<?php echo isset($searchText)?$searchText:null?>">
+
+	<button type="submit" class="btn">검색</button>
+
+</form>
+
+</div>
+</div>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
  <script src="js/bootstrap.js"></script>

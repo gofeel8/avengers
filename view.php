@@ -42,9 +42,8 @@ require_once("./db_info.php");
 <div id="grid">
   <div id="login">
     <ul class="list-group">
-      <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
-      <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-      <li class="list-group-item"><a href="crawling.php">공모전</a></li>
+      <li class="list-group-item"><a href="index.php"> 공모전</a></li>
+	    <li class="list-group-item"><a href="board.php"> 자유게시판</a></li>
     </ul>
   <div id="jb-sidebar-right">
     <?php
@@ -87,7 +86,10 @@ require_once("./db_info.php");
 </div>
 <div id="boardContent"><?php echo $row['comment']?></div>
 <?php
-  if(isset($_SESSION['username'])&&$_SESSION['username'] == $row['user']){
+  if(isset($_SESSION['username'])){
+
+  if($_SESSION['username'] == $row['user'] OR $_SESSION['username'] == '관리자'){
+
  ?>
 <div  style="float: right;">
   <form action="./write.php" method="get"class="inlineform">
@@ -102,6 +104,7 @@ require_once("./db_info.php");
 </div>
 
 <?php
+}
 }
  ?>
 <div id="boardComment">

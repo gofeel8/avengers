@@ -42,9 +42,8 @@ require_once("./db_info.php");
 <div id="grid">
   <div id="login">
     <ul class="list-group">
-      <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
-      <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-      <li class="list-group-item"><a href="crawling.php">공모전</a></li>
+      <li class="list-group-item"><a href="index.php"> 공모전</a></li>
+	    <li class="list-group-item"><a href="board.php"> 자유게시판</a></li>
     </ul>
   <div id="jb-sidebar-right">
     <?php
@@ -127,27 +126,9 @@ require_once("./db_info.php");
 <div id="boardInfo">
 <?php echo $row['info'] ?>
 </div>
-<div id="boardContent"><?php echo $row['comment']?></div>
-<?php
-  if(isset($_SESSION['username'])&&$_SESSION['username'] == $row['user']){
- ?>
-<div  style="float: right;">
-  <form action="./write.php" method="get"class="inlineform">
-    <input type="hidden" name="bno" value="<?php echo $bNo;?>">
-    <button type="submit" class="btnSubmit btn">수정</button>
-  </form>
-  &nbsp;
-<form action="./delete_update.php" method="post" class="inlineform">
-  <input type="hidden" name="bno" value="<?php echo $bNo;?>">
-  <button type="submit" class="float-right btn text-white btn-danger">삭제</button>
-</form>
-</div>
 
-<?php
-}
- ?>
 <div id="boardComment">
-  <?php require_once('./comment.php')?>
+  <?php require_once('./crawling_comment.php')?>
 </div>
 </div>
 </div>

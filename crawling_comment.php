@@ -1,9 +1,10 @@
 <?php
-	$sql = 'select * from avengers_comment where co_no=co_order and board=' . $bNo;
+	$sql = 'select * from avengers_comment2 where co_no=co_order and board=' . $bNo;
 	$result = $conn->query($sql);
 
 ?>
 <div id="comments">
+
 
 		<?php
 			while($row = $result->fetch_assoc()) {
@@ -12,7 +13,7 @@
 
 					<li>
         	<form action="./delete_update.php" method="post">
-          <input type="hidden" name="co_no" value="<?php echo $row['co_no']?>">
+          <input type="hidden" name="crawl_co_no" value="<?php echo $row['co_no']?>">
           <input type="hidden" name="back" value="<?php echo $bNo?>">
 					<address>
 				</address>
@@ -28,7 +29,7 @@
 
         <div class="comcont"><?php echo $row['co_content']?></div>
 				<?php
-					if(isset($_SESSION['username'])){
+				  if(isset($_SESSION['username'])){
 
 					if($_SESSION['username'] == $row['co_id'] OR $_SESSION['username'] == '관리자'){
 
@@ -55,7 +56,7 @@
  ?>
  <div class="writecomment">
 <h2>댓글 쓰기</h2>
-<form action="comment_update.php" method="post">
+<form action="crawling_comment_update.php" method="post">
   	<input type="hidden" name="board" value="<?php echo $bNo?>">
 	<table>
 		<tbody>

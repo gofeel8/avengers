@@ -17,6 +17,10 @@ if(isset($co_no)) {
 		$sql = "DELETE from avengers_comment where co_no =".$co_no;
 }
 
+if(isset($crawl_co_no)) {
+		$sql = "DELETE from avengers_crawling_comment where co_no =".$co_no;
+}
+
 
 $result=mysqli_query($conn,$sql);
 

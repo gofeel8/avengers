@@ -121,9 +121,8 @@ $searchColumn ='';
 <div id="grid">
   <div id="login">
 		<ul class="list-group">
-	    <li class="list-group-item"><a href="index.php"> 메인페이지</a></li>
-	    <li class="list-group-item"><a href="board.php"> 공지사항</a></li>
-	    <li class="list-group-item"><a href="crawling.php">공모전</a></li>
+			<li class="list-group-item"><a href="index.php"> 공모전</a></li>
+	    <li class="list-group-item"><a href="board.php"> 자유게시판</a></li>
 	  </ul>
   <div id="jb-sidebar-right">
     <?php
@@ -214,7 +213,7 @@ $searchColumn ='';
   </tbody>
 </table>
 <?php
-if(isset($_SESSION['username']) && $_SESSION['username']=="관리자"){
+if(isset($_SESSION['username'])){
  ?>
 <a href="./write.php" class="btn btn-default pull-right">글쓰기</a>
 <?php
@@ -222,15 +221,8 @@ if(isset($_SESSION['username']) && $_SESSION['username']=="관리자"){
  ?>
 <div class="text-center">
   <ul class="pagination">
-    <!-- <li><a href="#">1</a> </li> -->
-    <!-- <li><a href="#">2</a> </li>
-    <li><a href="#">3</a> </li>
-    <li><a href="#">4</a> </li> -->
-		<!-- <div class="paging"> -->
 
 		<?php echo $paging ?>
-
-		<!-- </div> -->
   </ul>
 
 </div>
