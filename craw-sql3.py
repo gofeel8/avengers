@@ -95,10 +95,10 @@ while(endcheck):
       except:
         conn.rollback()
         overlap = overlap + 1
-        print(title+"중복된데이터")
+        print("중복된 공모전 :"+title)
       else:
         overlap = 0
-        print(title+"INSERT OK")
+        print("INSERT OK :"+title)
 
       cnt1 = cnt1+1
 
@@ -196,10 +196,10 @@ while(endcheck):
       except:
         conn.rollback()
         overlap = overlap + 1
-        print(title+"중복된데이터")
+        print("중복된 공모전 :"+title)
       else:
         overlap = 0
-        print(title+"INSERT OK")
+        print("INSERT OK :"+title)
 
       cnt1 = cnt1+1
       infonum2=infonum2+1
@@ -306,10 +306,10 @@ while(endcheck):
       except:
         conn.rollback()
         overlap = overlap + 1
-        print(title+"중복된데이터")
+        print("중복된 공모전 :"+title)
       else:
         overlap = 0
-        print(title+"INSERT OK")
+        print("INSERT OK :"+title)
 
 
       cnt2 = cnt2+1
@@ -410,10 +410,10 @@ while(endcheck):
       except:
         conn.rollback()
         overlap = overlap + 1
-        print(title+"중복된데이터")
+        print("중복된 공모전 :"+title)
       else:
         overlap = 0
-        print(title+"INSERT OK")
+        print("INSERT OK :"+title)
 
 
 
