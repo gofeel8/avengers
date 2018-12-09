@@ -105,7 +105,7 @@ $searchColumn ='';
   <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>공지사항</title>
+  <title>자유게시판</title>
 <link rel="stylesheet" href="./css/style.css">
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -157,7 +157,7 @@ $searchColumn ='';
     <div class="container">
 
 <table class="table table-hover">
-	<caption class="readHide">공지사항</caption>
+	<caption class="readHide">자유게시판</caption>
 
   <thead>
     <tr>
