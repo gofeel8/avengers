@@ -438,7 +438,6 @@ while(endcheck):
       break
 
 
-print("total crawling num : "+str(cnt1)+str(cnt2))
 driver.close()
 conn.close()
 
