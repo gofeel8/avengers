@@ -10,15 +10,15 @@ import pymysql
 
 #someone use this project you shoud change DRIVER_DIR  cuz your chromedriver.exe is not same point
 #DRIVER_DIR = "C:/Users/user/Desktop/chromedriver_win32/chromedriver.exe"
-driver = webdriver.Chrome()
-driver.implicitly_wait(1)
+driver = webdriver.Chrome() #chrome driver root
+driver.implicitly_wait(1) #to stabilize the internet
 endcheck = True#if information number is done it change False
 pagenum=1 #pagenumber
 infonum=2 #cuz number start 2 not 1
 cnt1=0 #wevity crawling number
 cnt2=0 #thinkgood crawling number
 
-
+#database myssql connect
 conn=pymysql.connect(host="localhost",user='root',password='ffdsffds',db='crawling',charset='utf8')
 curs=conn.cursor()
 
@@ -26,21 +26,23 @@ curs=conn.cursor()
 #-------------------------------------------------------------------------------------
 #------------------wevity server receipt crawling ----------------------------------------------------
 
-while(endcheck):
-  driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'')
+while(endcheck): #infinity roof and if all information are crwaled endcheck is False and come out while 
+  driver.get('https://www.wevity.com/?c=find&s=1&mode=ing&gp='+str(pagenum)+'') #wevitiy page. only str(pagenum) is change
   time.sleep(2)
   overlap=0  # check for finishing crwaling when meet past data
 
   while(infonum<=16):
     try:
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
+      #wevity posts. only str(infonum) is change
       driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum)+']/div[1]/a').click()
+      #Extract the URL of the page and get information
       URL=(driver.current_url)
       res=requests.get(URL)
       html=res.text
 
-      time.sleep(1)
-
+      time.sleep(1) #to stabilize the internet
+      #check the page num, info num 
       print("----- receipt page "+str(pagenum)+" page, "+str(infonum-1)+" information -----")
       # (title)
       re_title = re.compile(">(.*)</h6>", re.MULTILINE)
@@ -89,10 +91,10 @@ while(endcheck):
       page='\n'.join(page_tag)
       # print(page)
 
-      try:
+      try: #title, company, day, information, image, page brint the homepage
         curs.execute("INSERT INTO avengers_crawling(title,com,day,info,img,page) VALUES(%s,%s,%s,%s,%s,%s)",(title,com,day,info,img,page))
         conn.commit()
-      except:
+      except: # check any option are overlapped
         conn.rollback()
         overlap = overlap + 1
         print("중복된 공모전 :"+title)
@@ -107,13 +109,13 @@ while(endcheck):
 
       driver.back()
 
-    except NoSuchElementException:# if pagenum == None
+    except NoSuchElementException:# if the crawling of the site's information are done so while statement is not work
       endcheck = False
       break
   infonum=2  #to reset num because we go next page
   pagenum=pagenum+1
 
-  if overlap == 15:
+  if overlap == 15: #if count overlap over 15, we think search before time so break 
       print("위비티 접수중 갱신완료")
       break
 
@@ -122,24 +124,26 @@ while(endcheck):
 #-------------------------------------------------------------------------------------
 #------------------wevity server to be receipt crawling ----------------------------------------------------
 
-endcheck = True
+endcheck = True #reset endcheck
 
 pagenum2=1
 infonum2=2
-while(endcheck):
-  driver.get('https://www.wevity.com/?c=find&s=1&mode=future&gp='+str(pagenum2)+'')
-  time.sleep(2)
+while(endcheck): #infinity roof and if all information are crwaled endcheck is False and come out while 
+  driver.get('https://www.wevity.com/?c=find&s=1&mode=future&gp='+str(pagenum2)+'')  #wevitiy page. only str(pagenum) is change
+  time.sleep(2) #to stabilize the internet
   overlap=0  # check for finishing crwaling when meet past data
 
   while(infonum2 <=16):
     try:
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
+      #wevitiy information. only str(infonum) is change
       driver.find_element_by_xpath('//*[@id="container"]/div[2]/div[1]/div[2]/div[3]/div/ul/li['+str(infonum2)+']/div[1]/a').click()
+      #Extract the URL of the page and get information
       URL=(driver.current_url)
       res=requests.get(URL)
       html=res.text
 
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
 
       print("-----to be receipt "+str(pagenum2)+" page, "+str(infonum2-1)+" information -----")
       # (title)
@@ -189,7 +193,7 @@ while(endcheck):
       page='\n'.join(page_tag)
       # print(page)
 
-      try:
+      try: #title company day information image page bring to homepage
         curs.execute("INSERT INTO avengers_crawling(title,com,day,info,img,page) VALUES(%s,%s,%s,%s,%s,%s)",(title,com,day,info,img,page))
         conn.commit()
 
@@ -206,18 +210,16 @@ while(endcheck):
 
       driver.back()
 
-    except NoSuchElementException:# if pagenum == None
+    except NoSuchElementException:# if the crawling of the site's information are done so while statement is not work
       endcheck = False
       break
   pagenum2=pagenum2+1
   infonum2=2  #to reset num because we go next page
 
 
-  if endcheck == False:
-    print("to be receipt crawling is finish ")
-    print("wevity server crawling num : "+str(cnt1))
+  if endcheck == False: 
     break
-  if overlap == 15:
+  if overlap == 15: #if count overlap over 15, we think search before time so break 
       print("위비티 접수예정 갱신완료")
       break
 
@@ -226,30 +228,28 @@ while(endcheck):
 #-------------------------------------------------------------------------------------
 #------------------thinkgood server receipt crawling ----------------------------------------------------
 
-
-
-
-
-endcheck = True
+endcheck = True #to reset endcheck
 
 pagenum3=1
 infonum3=1
-while(endcheck):
-
-  driver.get('https://www.thinkcontest.com/Contest/CateField.html?page='+str(pagenum3)+'&s=ing')
-  time.sleep(2)
+while(endcheck): #infinity roof and if all information are crwaled endcheck is False and come out while 
+  
+  driver.get('https://www.thinkcontest.com/Contest/CateField.html?page='+str(pagenum3)+'&s=ing') #thinkconest page. only str(pagenum) is change
+  time.sleep(2) #to stabilize the internet
   overlap=0  # check for finishing crwaling when meet past data
 
   while(infonum3 <=10):
     try:
 
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
+      #thinkconest information. only str(infonum) is change
       driver.find_element_by_xpath('//*[@id="main"]/div/div[2]/div/table/tbody/tr['+str(infonum3)+']/td[1]/div[1]/a').click()
+      #Extract the URL of the page and get information
       URL=(driver.current_url)
       res=requests.get(URL)
       html=res.text
 
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
       print("-----to be receipt "+str(pagenum3)+" page, "+str(infonum3)+" information -----")
 
       # (title)
@@ -299,7 +299,7 @@ while(endcheck):
       page='\n'.join(page_tag)
 #      print(page)
 
-      try:
+      try: #title company day information image page bring to homepage
         curs.execute("INSERT INTO avengers_crawling(title,com,day,info,img,page) VALUES(%s,%s,%s,%s,%s,%s)",(title,com,day,info,img,page))
         conn.commit()
 
@@ -316,7 +316,7 @@ while(endcheck):
       infonum3=infonum3+1
       driver.back()
 
-    except NoSuchElementException:# if pagenum == None
+    except NoSuchElementException: # if the crawling of the site's information are done so while statement is not work
       endcheck = False
       break
   pagenum3=pagenum3+1
@@ -336,26 +336,28 @@ while(endcheck):
 
 
 
-endcheck = True
+endcheck = True #to reset endcheck
 
 pagenum4=1
 infonum4=1
-while(endcheck):
+while(endcheck): #infinity roof and if all information are crwaled endcheck is False and come out while 
 
-  driver.get('https://www.thinkcontest.com/Contest/CateField.html?page='+str(pagenum4)+'&s=ing')
-  time.sleep(2)
+  driver.get('https://www.thinkcontest.com/Contest/CateField.html?page='+str(pagenum4)+'&s=ing') #thinkconest page. only str(pagenum) is change
+  time.sleep(2) #to stabilize the internet
   overlap=0  # check for finishing crwaling when meet past data
 
   while(infonum4 <=10):
     try:
 
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
+      #thinkconest information. only str(infonum) is change
       driver.find_element_by_xpath('//*[@id="main"]/div/div[2]/div/table/tbody/tr['+str(infonum4)+']/td[1]/div[1]/a').click()
+      #Extract the URL of the page and get information
       URL=(driver.current_url)
       res=requests.get(URL)
       html=res.text
 
-      time.sleep(1)
+      time.sleep(1) #to stabilize the internet
 
       print("-----to be receipt "+str(pagenum4)+" page, "+str(infonum4)+" information -----")
       # (title)
@@ -404,7 +406,7 @@ while(endcheck):
       page='\n'.join(page_tag)
 #      print(page)
 
-      try:
+      try: #title company day information image page bring to homepage
         curs.execute("INSERT INTO avengers_crawling(title,com,day,info,img,page) VALUES(%s,%s,%s,%s,%s,%s)",(title,com,day,info,img,page))
         conn.commit()
       except:
@@ -422,7 +424,7 @@ while(endcheck):
 
       driver.back()
 
-    except NoSuchElementException:# if pagenum == None
+    except NoSuchElementException:# if the crawling of the site's information are done so while statement is not work
       endcheck = False
       break
   pagenum4=pagenum4+1
