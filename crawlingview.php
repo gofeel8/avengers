@@ -113,7 +113,7 @@ require_once("./db_info.php");
     </tr>
     <tr>
       <th scope="row">
-        홈페이지</th>
+        URL</th>
       <td>
       <a href="<?php echo $row['page']?>"><?php echo $row['page']?></a></td>
     </tr>
