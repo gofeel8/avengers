@@ -3,8 +3,11 @@
 - 201315164 GongPhilSang 
 - 201515246 KangJinWook 
 ## avengers porject is gathering talented people  for competition
+If want to build a spec in your career ?
 
+Find a contest on our site !
 
+And recruit your team members through comments!
 
 ## Crawl target site
 - https://www.wevity.com
@@ -13,13 +16,13 @@
 
 ## Compose
 - ppt folder
-### our ppt file
+##### our ppt file
 - pratice folder
-### There are files that we've practiced
+##### There are files that we've practiced
 - web
-### The files that make up the website exist
+##### The files that make up the website exist
 - crawler.py
-### own crawling sauce
+##### own crawling sauce
 
 ## Our Development Environment
 - ubuntu 16.04
